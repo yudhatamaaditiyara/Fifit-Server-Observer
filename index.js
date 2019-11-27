@@ -15,6 +15,8 @@
  */
 'use strict';
 
+const {RuntimeError} = require('ganiyem-error');
+
 /**
  */
 class Observer
@@ -40,15 +42,15 @@ class Observer
 
   /**
    * @param {Server} server
-   * @throws {Error}
+   * @throws {RuntimeError}
    * @returns {Observer}
    */
   register(server){
     if (this.isStarted) {
-      throw new Error('The observer is started');
+      throw new RuntimeError('The observer is started');
     }
     if (server.isStarted) {
-      throw new Error('The server is started');
+      throw new RuntimeError('The server is started');
     }
     this._servers.add(server);
     return this;
@@ -65,12 +67,12 @@ class Observer
 
   /**
    * @param {Server} server
-   * @throws {Error}
+   * @throws {RuntimeError}
    * @returns {Observer}
    */
   unregister(server){
     if (this.isStarted) {
-      throw new Error('The observer is started');
+      throw new RuntimeError('The observer is started');
     }
     this._servers.delete(server);
     return this;
@@ -87,12 +89,12 @@ class Observer
 
   /**
    * @param {function} listener
-   * @throws {Error}
+   * @throws {RuntimeError}
    * @returns {Observer}
    */
   listen(listener){
     if (this.isStarted) {
-      throw new Error('The observer is started');
+      throw new RuntimeError('The observer is started');
     }
     this._servers.forEach(server => server.listen(listener));
     return this;
@@ -100,12 +102,12 @@ class Observer
 
   /**
    * @param {function} listener
-   * @throws {Error}
+   * @throws {RuntimeError}
    * @returns {Observer}
    */
   unlisten(listener){
     if (this.isStarted) {
-      throw new Error('The observer is started');
+      throw new RuntimeError('The observer is started');
     }
     this._servers.forEach(server => server.unlisten(listener));
     return this;
@@ -116,7 +118,7 @@ class Observer
    */
   start(){
     if (this.isStarted) {
-      return Promise.reject(new Error('The observer is started'));
+      return Promise.reject(new RuntimeError('The observer is started'));
     }
     return this._start(this._servers.values());
   }
@@ -126,7 +128,7 @@ class Observer
    */
   stop(){
     if (!this.isStarted) {
-      return Promise.reject(new Error('The observer is not started'));
+      return Promise.reject(new RuntimeError('The observer is not started'));
     }
     return this._stop(this._servers.values());
   }
