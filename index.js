@@ -20,7 +20,7 @@
 class Observer
 {
   /**
-   * @params {Array|void} servers
+   * @params {Array} [servers]
    */
   constructor(servers){
     this._servers = new Set();
