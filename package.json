@@ -19,6 +19,9 @@
     "fifit-server-http2": "^0.0.5",
     "fifit-server-https2": "^0.0.4"
   },
+  "engines": {
+    "node": ">= 12.0.0"
+  },
   "scripts": {
     "test": "nyc mocha --config test/config.json",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
